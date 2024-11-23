@@ -29,6 +29,16 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+Project Description:
+GateLess Parking is a comprehensive Parking Management Application designed to help both parking lot administrators and users manage parking spaces efficiently. It features a powerful Admin Dashboard that allows parking lot managers to monitor and control parking spots, as well as an Automatic License Plate Recognition (ALPR) simulator for secure entry and exit management. The application ensures smooth parking operations, facilitates user-friendly access, and improves overall management of parking spaces.
+
+Features:
+Admin Dashboard: Provides parking lot managers with a centralized control panel to monitor, manage, and optimize parking spaces.
+ALPR Simulator: Simulates the process of automatic license plate recognition for automated entry/exit in the parking lot.
+User-friendly Interface: Simple and intuitive interface for users to view available parking spaces and book them in real-time.
+Parking Space Management: Tracks the status of each parking space (available, occupied, or reserved).
+Booking System: Allows users to book parking spaces in advance and make payments securely.
+Real-time Updates: Admin dashboard and users see live updates about available parking spaces.
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
