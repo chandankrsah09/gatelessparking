@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import SpotAddress from "./spot-address";
+import NumberOfSpots from "./number-of-spots";
 
 const totalSteps = 4;
 const stepIncrement = 100 / totalSteps;
@@ -55,9 +56,24 @@ function AddLocationDialog({ id = null, open, setOpen }: props) {
 
     setStep(currentStep => currentStep + 1)
   }
+
+  const handleOnInteracOutside = (e:Event) => {
+    const classes: Array<Array<string>> = []
+      
+      e.composedPath().forEach((el:any) => {
+        if (el.classList) {
+          classes.push(Array.from(el.classList))
+        }
+      })
+
+      if (classes.join("_").includes("pac-container")) {
+        e.preventDefault()
+      }
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
+      <DialogContent onInteractOutside={handleOnInteracOutside}>
         <DialogHeader>
           <DialogTitle>List Your Spot.</DialogTitle>
           <div className="space-y-8">
@@ -65,12 +81,13 @@ function AddLocationDialog({ id = null, open, setOpen }: props) {
             {{
                 1:<SpotAddress onNext={handleNextStepChange} onPrev={function (): void {
                     throw new Error("Function not implemented.");
-                } }/>
+                } }/>,
+                2:<NumberOfSpots />
             }[step]}
           </div>
         </DialogHeader>
         <DialogFooter>
-          <div className="flex flex-col mt-4 w-full space-y-2">
+          <div className={`${step < totalSteps ? "hidden" : `flex flex-col mt-4 w-full space-y-2`}`}>
             <Button type="button" onClick={handleFinalSubmit}>
               Submit
             </Button>
