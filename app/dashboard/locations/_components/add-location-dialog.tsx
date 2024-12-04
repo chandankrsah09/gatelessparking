@@ -25,9 +25,9 @@ type props = {
 };
 function AddLocationDialog({ id = null, open, setOpen }: props) {
   const [step, setStep] = useState(1);
-  const [submitting, setSubmitting] = useState(false);
+  // const [submitting, setSubmitting] = useState(false);
   const mySpotStore = useMySpotStore();
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     setStep(1);

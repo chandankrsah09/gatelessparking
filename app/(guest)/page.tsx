@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
 import Footer from "@/components/ui/footer";
 import SearchComponent from "@/components/ui/search-component";
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -67,7 +67,7 @@ export default function Home() {
             </div>
 
             <div className="pt-8 sm:pt-0">
-              <img src="/gateless-parking-mobile.png" alt="mobile screenshot" width={320} height={400} />
+              <Image src="/gateless-parking-mobile.png" alt="mobile screenshot" width={320} height={400} />
             </div>
           </div>
 

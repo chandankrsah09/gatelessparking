@@ -14,7 +14,7 @@ function Summary({ onNext, onPrev }: ListSpotPropsType) {
         <p>Number of spot(5):{mySpotStore.data.numberofspots}</p>
         <p>
           Hourly:{" "}
-          {formatAmountForDisplay(mySpotStore.data.price?.hourly!, "inr")}
+          {formatAmountForDisplay(mySpotStore.data.price?.hourly ?? 0, "inr")}
         </p>
       </div>
 

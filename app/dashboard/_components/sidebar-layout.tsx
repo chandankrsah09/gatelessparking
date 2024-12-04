@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import MobileSidebar from "./mobile-sidebar";
 import DesktopSidebar from "./desktop-sidebar";
 
-type Props = {
-  children: React.ReactNode;
-};
+// type Props = {
+//   children: React.ReactNode;
+// };
 function SidebarLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   return (

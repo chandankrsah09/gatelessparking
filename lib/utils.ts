@@ -12,7 +12,7 @@ export function formatAmountForDisplay(
   amount: number,
   currency: string
 ): string {
-  let numberFormat = new Intl.NumberFormat("en-IN", {
+  const numberFormat = new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: currency,
     currencyDisplay: "symbol",
