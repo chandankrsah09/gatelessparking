@@ -7,3 +7,17 @@ export const libs: Library[] = ["core", "maps", "places", "marker"];
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function formatAmountForDisplay(
+  amount: number,
+  currency: string
+): string {
+  let numberFormat = new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: currency,
+    currencyDisplay: "symbol",
+  });
+
+  const formatedAmount = numberFormat.format(amount);
+  return formatedAmount === "NaN" ? "" : formatedAmount;
+}

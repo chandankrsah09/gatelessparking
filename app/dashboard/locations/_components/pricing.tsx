@@ -15,43 +15,43 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const FormSchema = z.object({
-  numberofspots: z.coerce
+  hourly: z.coerce
     .number({ invalid_type_error: "must be a number" })
     .positive({ message: "must be positive" }),
 });
 
-type NumberOfSpotsInput = z.infer<typeof FormSchema>;
-function NumberOfSpots({ onNext, onPrev }: ListSpotPropsType) {
+type PricingInput = z.infer<typeof FormSchema>;
+function pricing({ onNext, onPrev }: ListSpotPropsType) {
   const mySpotStore = useMySpotStore();
 
-  const form = useForm<NumberOfSpotsInput>({
+  const form = useForm<PricingInput>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      numberofspots: mySpotStore.data.numberofspots,
+      hourly: mySpotStore.data.price?.hourly,
     },
   });
 
-  const onSubmit = (data: NumberOfSpotsInput) => {
+  const onSubmit = (data: PricingInput) => {
     mySpotStore.updateState({
-      numberofspots: data.numberofspots,
+      price: { ...data },
     });
     onNext();
   };
   return (
     <div className="grid w-full gap-1 5">
       <h2 className="text-xl sm:text-2xl py-4 font-semibold">
-        Number of Parking Spots
+        Pricing
       </h2>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
-            name="numberofspots"
+            name="hourly"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input {...field} placeholder="Number of Parking Spots" />
+                  <Input {...field} placeholder="e.g. 10" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -72,4 +72,4 @@ function NumberOfSpots({ onNext, onPrev }: ListSpotPropsType) {
   );
 }
 
-export default NumberOfSpots;
+export default pricing;

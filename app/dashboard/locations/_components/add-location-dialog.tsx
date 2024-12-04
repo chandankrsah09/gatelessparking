@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import SpotAddress from "./spot-address";
 import NumberOfSpots from "./number-of-spots";
+import Pricing from "./pricing";
+import Summary from "./summary";
 
 const totalSteps = 4;
 const stepIncrement = 100 / totalSteps;
@@ -51,25 +53,31 @@ function AddLocationDialog({ id = null, open, setOpen }: props) {
     console.log(mySpotStore.data);
   };
 
+  const handlePrevStepChange = () => {
+    if (step === 1) return;
+
+    setStep((currentStep) => currentStep - 1);
+  };
+
   const handleNextStepChange = () => {
-    if (step === totalSteps) return
+    if (step === totalSteps) return;
 
-    setStep(currentStep => currentStep + 1)
-  }
+    setStep((currentStep) => currentStep + 1);
+  };
 
-  const handleOnInteracOutside = (e:Event) => {
-    const classes: Array<Array<string>> = []
-      
-      e.composedPath().forEach((el:any) => {
-        if (el.classList) {
-          classes.push(Array.from(el.classList))
-        }
-      })
+  const handleOnInteracOutside = (e: Event) => {
+    const classes: Array<Array<string>> = [];
 
-      if (classes.join("_").includes("pac-container")) {
-        e.preventDefault()
+    e.composedPath().forEach((el: any) => {
+      if (el.classList) {
+        classes.push(Array.from(el.classList));
       }
-  }
+    });
+
+    if (classes.join("_").includes("pac-container")) {
+      e.preventDefault();
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -77,17 +85,47 @@ function AddLocationDialog({ id = null, open, setOpen }: props) {
         <DialogHeader>
           <DialogTitle>List Your Spot.</DialogTitle>
           <div className="space-y-8">
-            <Progress value={step * stepIncrement}/>
-            {{
-                1:<SpotAddress onNext={handleNextStepChange} onPrev={function (): void {
-                    throw new Error("Function not implemented.");
-                } }/>,
-                2:<NumberOfSpots />
-            }[step]}
+            <Progress value={step * stepIncrement} />
+            {
+              {
+                1: (
+                  <SpotAddress
+                    onNext={handleNextStepChange}
+                    onPrev={function (): void {
+                      throw new Error("Function not implemented.");
+                    }}
+                  />
+                ),
+                2: (
+                  <NumberOfSpots
+                    onNext={handleNextStepChange}
+                    onPrev={handlePrevStepChange}
+                  />
+                ),
+                3: (
+                  <Pricing
+                    onNext={handleNextStepChange}
+                    onPrev={handlePrevStepChange}
+                  />
+                ),
+                4: (
+                  <Summary
+                    onNext={handleNextStepChange}
+                    onPrev={handlePrevStepChange}
+                  />
+                ),
+              }[step]
+            }
           </div>
         </DialogHeader>
         <DialogFooter>
-          <div className={`${step < totalSteps ? "hidden" : `flex flex-col mt-4 w-full space-y-2`}`}>
+          <div
+            className={`${
+              step < totalSteps
+                ? "hidden"
+                : `flex flex-col mt-4 w-full space-y-2`
+            }`}
+          >
             <Button type="button" onClick={handleFinalSubmit}>
               Submit
             </Button>
