@@ -7,3 +7,13 @@ export type ListSpotPropsType = {
     onNext: () => void,
     onPrev: () => void,
 }
+
+export type Price = {
+    hourly: number
+}
+
+export enum ParkingLocationStatus {
+    AVAILABLE = 'AVAILABLE',
+    UNAVAILABLE = 'UNAVAILABLE',
+    FULL = 'FULL',
+}
