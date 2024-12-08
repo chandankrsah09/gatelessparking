@@ -7,35 +7,38 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useMySpotStore } from "@/store";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import SpotAddress from "./spot-address";
 import NumberOfSpots from "./number-of-spots";
 import Pricing from "./pricing";
 import Summary from "./summary";
+import { toast } from "sonner";
 
 const totalSteps = 4;
 const stepIncrement = 100 / totalSteps;
 
-type props = {
+type Props = {
   id?: string | null;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
-function AddLocationDialog({ id = null, open, setOpen }: props) {
+
+function AddLocationDialog({ id = null, open, setOpen }: Props) {
   const [step, setStep] = useState(1);
-  // const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const mySpotStore = useMySpotStore();
-  // const router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     setStep(1);
 
-    //   fetch data
+    // fetch data
     const fetchData = () => {
       console.log("fetch data");
     };
+
     if (id && open) {
       fetchData();
     } else {
@@ -44,25 +47,43 @@ function AddLocationDialog({ id = null, open, setOpen }: props) {
   }, [id, open]);
 
   const handleListAnother = () => {
-    // handle list another
     setStep(1);
     mySpotStore.restart();
   };
-  const handleFinalSubmit = () => {
+
+  const handleFinalSubmit = async () => {
     // save the data in the db
+    setSubmitting(true);
+
+    const data = new FormData();
     console.log(mySpotStore.data);
-  };
+    data.set("data", JSON.stringify(mySpotStore.data));
 
-  const handlePrevStepChange = () => {
-    if (step === 1) return;
+    const result = await fetch("/api/parkinglocation/new", {
+      method: "POST",
+      body: data,
+    });
+    setSubmitting(false);
 
-    setStep((currentStep) => currentStep - 1);
+    if (result.ok) {
+      toast.success("Record created");
+      router.refresh();
+    } else {
+      // show error
+      toast.error("failed to create the parking location");
+    }
   };
 
   const handleNextStepChange = () => {
     if (step === totalSteps) return;
 
     setStep((currentStep) => currentStep + 1);
+  };
+
+  const handlePrevStepChange = () => {
+    if (step === 1) return;
+
+    setStep((currentStep) => currentStep - 1);
   };
 
   const handleOnInteracOutside = (e: Event) => {
@@ -74,16 +95,15 @@ function AddLocationDialog({ id = null, open, setOpen }: props) {
       }
     });
 
-    if (classes.join("_").includes("pac-container")) {
+    if (classes.join("-").includes("pac-container")) {
       e.preventDefault();
     }
   };
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent onInteractOutside={handleOnInteracOutside}>
         <DialogHeader>
-          <DialogTitle>List Your Spot.</DialogTitle>
+          <DialogTitle>List your spot</DialogTitle>
           <div className="space-y-8">
             <Progress value={step * stepIncrement} />
             {
@@ -123,14 +143,14 @@ function AddLocationDialog({ id = null, open, setOpen }: props) {
             className={`${
               step < totalSteps
                 ? "hidden"
-                : `flex flex-col mt-4 w-full space-y-2`
+                : "flex flex-col mt-4 w-full space-y-2"
             }`}
           >
             <Button type="button" onClick={handleFinalSubmit}>
               Submit
             </Button>
             <Button type="button" variant="outline" onClick={handleListAnother}>
-              List Another
+              List another
             </Button>
           </div>
         </DialogFooter>

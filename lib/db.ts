@@ -1,4 +1,3 @@
-// https://github.com/vercel/next.js/blob/canary/examples/with-mongodb/lib/mongodb.ts
 import { MongoClient } from "mongodb"
 import mongoose, { Mongoose } from 'mongoose'
 

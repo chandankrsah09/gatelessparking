@@ -11,6 +11,7 @@ function Summary({ onNext, onPrev }: ListSpotPropsType) {
     <div className="grid w-full gap-1 5">
       <h2 className="text-xl sm:text-2xl py-4 font-semibold">Summary</h2>
       <div className="flex flex-col gap-y-2 text-lg text-muted-foreground">
+        <p>{mySpotStore.data.address}</p>
         <p>Number of spot(5):{mySpotStore.data.numberofspots}</p>
         <p>
           Hourly:{" "}
