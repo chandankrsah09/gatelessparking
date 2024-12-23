@@ -1,5 +1,5 @@
 import { ParkingLocationModel } from "@/schemas/parking-locations";
-import React from "react";
+import LocationEditForm from "./location-edit-form";
 
 async function LocationEditPage({
   params,
@@ -7,7 +7,9 @@ async function LocationEditPage({
   params: { locationid: string };
 }) {
   const location = await ParkingLocationModel.findById(params.locationid);
-  return <div>edit {location.address}</div>;
+  return (
+    <LocationEditForm location={JSON.stringify(location)} />
+  )
 }
 
 export default LocationEditPage;

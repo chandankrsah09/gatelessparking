@@ -6,7 +6,7 @@
 import { connectToDB } from "@/lib/db"
 // import { Booking, BookingModel } from "@/schemas/booking"
 import { ParkingLocation, ParkingLocationModel } from "@/schemas/parking-locations"
-import { ParkingLocationStatus } from "@/types"
+import { ParkingLocationStatus, UpdateLocationParams } from "@/types"
 // import { ActionResponse, BookingStatus, ParkingLocationStatus, UpdateLocationParams } from "@/types"
 // import { currentUser } from "@clerk/nextjs/server"
 // import { compareAsc, format, formatDate } from "date-fns"
@@ -48,27 +48,26 @@ export async function deleteLocation({ id, path }: {
     }
 }
 
+export async function updateLocation({ id, path, location }: {
+    id: string, path: string, location: UpdateLocationParams
+}) {
 
-// export async function updateLocation({ id, path, location }: {
-//     id: string, path: string, location: UpdateLocationParams
-// }) {
+    try {
+        await connectToDB()
 
-//     try {
-//         await connectToDB()
+        const result = await ParkingLocationModel.updateOne({
+            _id: id
+        }, {
+            $set: location
+        })
 
-//         const result = await ParkingLocationModel.updateOne({
-//             _id: id
-//         }, {
-//             $set: location
-//         })
+        revalidatePath(path)
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
 
-//         revalidatePath(path)
-//     } catch (error) {
-//         console.log(error)
-//         throw error
-//     }
-
-// }
+}
 
 // export async function findNearbyLocations(maxDistance: number, searchParams: SearchParams) {
 

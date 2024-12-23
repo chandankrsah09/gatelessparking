@@ -17,3 +17,11 @@ export enum ParkingLocationStatus {
     UNAVAILABLE = 'UNAVAILABLE',
     FULL = 'FULL',
 }
+
+export type UpdateLocationParams = {
+    address: string,
+    NumberOfSpots: number,
+    price: {
+        hourly: number
+    }
+}
