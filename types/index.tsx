@@ -25,3 +25,22 @@ export type UpdateLocationParams = {
         hourly: number
     }
 }
+
+export enum MapAddressType {
+    PARKINGLOCATION = 'PARKINGLOCATION',
+    DESTINATION = 'DESTINATION',
+    ADMIN = 'ADMIN',
+}
+
+export type MapParams = {
+    id: string,
+    gpscoords: LatLng,
+    address: string,
+    numberofspots?: number,
+    bookedspots?: number,
+    price?: Price,
+    type?: string,
+    status?: string,
+    radius?: number,
+}
+
